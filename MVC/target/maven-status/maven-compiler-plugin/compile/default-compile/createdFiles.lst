@@ -1,0 +1,6 @@
+mvc\unomaxs\crud\model\ConsultasProducto.class
+mvc\unomaxs\crud\crudmvc\CRUDMVC.class
+mvc\unomaxs\crud\view\frmProducto.class
+mvc\unomaxs\crud\model\Conexion.class
+mvc\unomaxs\crud\controller\CtrlProducto.class
+mvc\unomaxs\crud\model\Producto.class

@@ -13,19 +13,23 @@ public class Conexion {
 
     Connection con = null;
 
-    String base = "tienda";
+    String base = "db";
     String url = "jdbc:mysql://localhost:3306/" + base;
-    String user = "root";
+    String user = "admin";
     String password = "password";
 
-    public Connection getConexion() {
-
+    public Connection getConexion() throws SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(url, user, password);
-        } catch (ClassNotFoundException | SQLException e) {
-            System.err.println(e);
+        } catch (ClassNotFoundException e) {
+            System.err.println("Driver MySQL no encontrado: " + e.getMessage());
+            throw new SQLException(e);
+        } catch (SQLException e) {
+            System.err.println("Error de conexión a la base de datos: " + e.getMessage());
+            throw e;
         }
         return con;
     }
+
 }

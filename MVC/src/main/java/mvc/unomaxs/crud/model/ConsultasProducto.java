@@ -7,18 +7,19 @@ import java.sql.SQLException;
 
 public class ConsultasProducto extends Conexion {
 
-    public boolean registrar(Producto pro) {
+    public boolean registrar(Producto pro) throws SQLException {
         PreparedStatement ps = null;
         Connection con = getConexion();
 
-        String sql = "INSERT INTO producto (codigo, nombre, precio , cantidad) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO producto (id, codigo, nombre, precio , cantidad) VALUES(?,?,?,?,?)";
 
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, pro.getCodigo());
-            ps.setString(2, pro.getNombre());
-            ps.setDouble(3, pro.getPrecio());
-            ps.setInt(4, pro.getCantidad());
+            ps.setInt(1, pro.getId());
+            ps.setString(2, pro.getCodigo());
+            ps.setString(3, pro.getNombre());
+            ps.setDouble(4, pro.getPrecio());
+            ps.setInt(5, pro.getCantidad());
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -33,7 +34,7 @@ public class ConsultasProducto extends Conexion {
         }
     }
 
-    public boolean modificar(Producto pro) {
+    public boolean modificar(Producto pro) throws SQLException {
         PreparedStatement ps = null;
         Connection con = getConexion();
 
@@ -60,7 +61,7 @@ public class ConsultasProducto extends Conexion {
         }
     }
 
-    public boolean eliminar(Producto pro) {
+    public boolean eliminar(Producto pro) throws SQLException {
         PreparedStatement ps = null;
         Connection con = getConexion();
 
@@ -83,7 +84,7 @@ public class ConsultasProducto extends Conexion {
         }
     }
 
-    public boolean buscar(Producto pro) {
+    public boolean buscar(Producto pro) throws SQLException {
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection con = getConexion();

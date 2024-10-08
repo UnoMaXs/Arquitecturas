@@ -7,6 +7,7 @@ import mvc.unomaxs.crud.view.frmProducto;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class CtrlProducto implements ActionListener {
@@ -41,12 +42,16 @@ public class CtrlProducto implements ActionListener {
             modelo.setPrecio(Double.parseDouble(vista.txtPrecio.getText()));
             modelo.setCantidad(Integer.parseInt(vista.txtCantidad.getText()));
 
-            if (consultas.registrar(modelo)) {
-                JOptionPane.showMessageDialog(null, "Registro Guardado");
-                limpiar();
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al Guardar");
-                limpiar();
+            try {
+                if (consultas.registrar(modelo)) {
+                    JOptionPane.showMessageDialog(null, "Registro Guardado");
+                    limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al Guardar");
+                    limpiar();
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
         }
 
@@ -57,40 +62,52 @@ public class CtrlProducto implements ActionListener {
             modelo.setPrecio(Double.parseDouble(vista.txtPrecio.getText()));
             modelo.setCantidad(Integer.parseInt(vista.txtCantidad.getText()));
 
-            if (consultas.modificar(modelo)) {
-                JOptionPane.showMessageDialog(null, "Registro Modificado");
-                limpiar();
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al Modificar");
-                limpiar();
+            try {
+                if (consultas.modificar(modelo)) {
+                    JOptionPane.showMessageDialog(null, "Registro Modificado");
+                    limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al Modificar");
+                    limpiar();
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
         }
 
         if (e.getSource() == vista.btnEliminar) {
             modelo.setId(Integer.parseInt(vista.txtId.getText()));
 
-            if (consultas.eliminar(modelo)) {
-                JOptionPane.showMessageDialog(null, "Registro Eliminado");
-                limpiar();
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al Eliminar");
-                limpiar();
+            try {
+                if (consultas.eliminar(modelo)) {
+                    JOptionPane.showMessageDialog(null, "Registro Eliminado");
+                    limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al Eliminar");
+                    limpiar();
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
         }
 
         if (e.getSource() == vista.btnBuscar) {
             modelo.setCodigo(vista.txtCodigo.getText());
 
-            if (consultas.buscar(modelo)) {
-                vista.txtId.setText(String.valueOf(modelo.getId()));
-                vista.txtCodigo.setText(modelo.getCodigo());
-                vista.txtNombre.setText(modelo.getNombre());
-                vista.txtPrecio.setText(String.valueOf(modelo.getPrecio()));
-                vista.txtCantidad.setText(String.valueOf(modelo.getCantidad()));
+            try {
+                if (consultas.buscar(modelo)) {
+                    vista.txtId.setText(String.valueOf(modelo.getId()));
+                    vista.txtCodigo.setText(modelo.getCodigo());
+                    vista.txtNombre.setText(modelo.getNombre());
+                    vista.txtPrecio.setText(String.valueOf(modelo.getPrecio()));
+                    vista.txtCantidad.setText(String.valueOf(modelo.getCantidad()));
 
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontro registro");
-                limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontro registro");
+                    limpiar();
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
         }
 
